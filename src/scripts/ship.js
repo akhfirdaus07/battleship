@@ -1,21 +1,22 @@
-const Ship=(length)=>{
-    const tiles=[...Array(length).keys()];
-    const domTargets=[];
+const Ship = (length) => {
+  const tiles = [...Array(length).keys()];
 
-    const hit=(pos)=>{
-        if (tiles[pos]=="hit") return false;
-        tiles.splice(pos,1,"hit");
-    };
+  const hit = (pos) => {
+    if (tiles[pos] == "hit") return false;
+    tiles.splice(pos, 1, "hit");
+  };
 
-    const isSunk=()=>{
-        let stillAlive=false;
-        tiles.forEach((e)=>{
-            if(e!=="hit") stillAlive=true;
-        });
-        return stillAlive===true ? false : true;
-    };
+  const isSunk = () => {
+    let stillAlive = false;
+    tiles.forEach((e) => {
+      if (e !== "hit") stillAlive = true;
+    });
+    return stillAlive === true ? false : true;
+  };
 
-    return {length, tiles, hit, isSunk, domTargets}
+  return { tiles, length, hit, isSunk};
 };
 
-export default Ship;
+// export default Ship;
+
+module.exports=Ship;

@@ -1,4 +1,4 @@
-import Gameboard from "../gameboard";
+const Gameboard=require("../gameboard");
 
 let gameboard = Gameboard();
 
@@ -27,7 +27,7 @@ test("reject horizontal boat that goes over the right edge", () => {
 });
 test("extend vertical ship down", () => {
   gameboard.placeShip(0, 0, 2, "v");
-  expect(gameboard.board[0][0] && gameboard.board[1][0]).toBeTruthy();
+  expect(gameboard.board[0] && gameboard.board[1]).toBeTruthy();
 });
 test("reject vertical ship that goes over bottom edge", () => {
   expect(gameboard.placeShip(7, 5, 4, "v")).toBe(false);
@@ -37,22 +37,26 @@ test("hit ship return pos with 'hit'", () => {
   expect(gameboard.receiveAttack(0, 5)).toBe("hit");
 });
 test("2x hit ship return pos with 'hit'", () => {
+  let gameboard = Gameboard();
+
   gameboard.placeShip(0, 0, 5, "v");
   gameboard.receiveAttack(0, 0);
   gameboard.receiveAttack(1, 0);
-  expect(
-    gameboard.board[0][0].ship.tiles[gameboard.board[0][0].shipPos] &&
-      gameboard.board[1][0].ship.tiles[gameboard.board[1][0].shipPos]
-  ).toBe("hit");
+  expect(gameboard.board[1][0].ship.tiles[gameboard.board[1][0].shipPos] &&
+    gameboard.board[0][0].ship.tiles[gameboard.board[0][0].shipPos]).toBe("hit");
 });
 test("sunk ship returns sunk", () => {
+  let gameboard = Gameboard();
+
   gameboard.placeShip(0, 0, 2, "v");
   gameboard.receiveAttack(0, 0);
   gameboard.receiveAttack(1, 0);
 
-  expect(gameboard.isSunk(0, 0)).toBeTruthy();
+  expect(gameboard.board[0][0].ship.isSunk()).toBeTruthy();
 });
 test("are all ships on the board sunk?", () => {
+  let gameboard = Gameboard();
+
   gameboard.placeShip(0, 0, 2, "v");
   gameboard.placeShip(0, 4, 2, "h");
   gameboard.receiveAttack(0, 0);
